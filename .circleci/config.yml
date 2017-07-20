@@ -55,7 +55,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: ls build/
+      - run: ls ~/repo/build/
 workflows:
   version: 2
   build-and-deploy:
