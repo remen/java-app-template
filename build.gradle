@@ -12,7 +12,14 @@ dependencyManagement {
 
 mainClassName = "com.example.Application"
 
+task copyDockerFile(type: Copy) {
+    from 'src/main/docker/Dockerfile'
+    into 'build/install/' + project.name
+}
+
 assemble.dependsOn installDist
+assemble.dependsOn copyDockerFile
+
 distZip.enabled = false
 distTar.enabled = false
 
