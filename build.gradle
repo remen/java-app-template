@@ -16,4 +16,3 @@ task downloadDependencies(type: Exec) {
     configurations.testRuntime.files
     commandLine 'echo', 'Downloaded all dependencies'
 }
-
