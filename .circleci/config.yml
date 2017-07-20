@@ -23,7 +23,8 @@ jobs:
     
     steps:
       - checkout
-
+      - attach_workspace:
+          at: ~/repo
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -39,16 +40,20 @@ jobs:
             - ~/.gradle/wrapper/dists
           key: v1-dependencies-{{ checksum "build.gradle" }}
         
-      # run tests!
-      - run: ./gradlew test
+      # build
+      - run: ./gradlew build
 
       - store_test_results:
           path: build/test-results
+
+      - persist_to_workspace:
+          root: .
+          paths: build
   deploy:
     docker:
-      - image: circleci/docker
+      - image: circleci/openjdk:8-jdk
     steps:
-      - run: echo "Deploying!"
+      - run: ls build/
 workflows:
   version: 2
   build-and-deploy:
