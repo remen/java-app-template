@@ -37,3 +37,23 @@ task downloadDependencies(type: Exec) {
     configurations.testRuntime.files
     commandLine 'echo', 'Downloaded all dependencies'
 }
+
+ext {
+    dockerImageTag = "remen/${applicationName}:latest"
+}
+
+task buildDockerImage(type: Exec) {
+    group 'Build'
+    description 'Builds a docker image for this project'
+
+    dependsOn installDist, copyDockerFile
+    commandLine 'docker', 'build', installDist.destinationDir, '-t', dockerImageTag
+}
+
+task pushDockerImage(type: Exec) {
+    group 'Distribution'
+    description 'Pushes the docker image to the repository'
+
+    dependsOn buildDockerImage
+    commandLine 'docker', 'push', dockerImageTag
+}
