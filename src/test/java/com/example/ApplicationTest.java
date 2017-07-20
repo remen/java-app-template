@@ -24,6 +24,6 @@ public class ApplicationTest {
     public void running_main_does_not_crash() throws Exception {
         ResponseEntity<Map> response = testRestTemplate.getForEntity("/", Map.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
-        assertThat(response.getBody().get("greeting"), equalTo("Hello World"));
+        assertThat(response.getBody().get("greeting"), equalTo("Hello World!"));
     }
 }
