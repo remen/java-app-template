@@ -3,24 +3,18 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/openjdk:8-jdk
+  environment:
+    # Customize the JVM maximum heap limit
+    JVM_OPTS: -Xmx3200m
+    TERM: dumb
+
 jobs:
   check:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
-    
+    <<: *defaults
     steps:
       - checkout
       # Download and cache dependencies
@@ -46,22 +40,11 @@ jobs:
 
       - persist_to_workspace:
           root: .
-          paths: build
+          paths: .
 
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
-
+    <<: *defaults
     steps:
-      - checkout
       - attach_workspace:
           at: ~/repo
 
@@ -77,12 +60,10 @@ jobs:
 
       - persist_to_workspace:
           root: .
-          paths: build
+          paths: .
 
   deploy:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/openjdk:8-jdk
+    <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
@@ -96,10 +77,10 @@ workflows:
       - build:
           requires:
             - check
-      - hold:
-          type: approval
-          requires:
-            - build
-      - deploy:
-          requires:
-            - hold
+#      - hold:
+#          type: approval
+#          requires:
+#            - build
+#      - deploy:
+#          requires:
+#            - hold
