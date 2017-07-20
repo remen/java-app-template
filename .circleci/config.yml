@@ -49,11 +49,13 @@ jobs:
       - run: echo "Deploying!"
 workflows:
   version: 2
-  build_and_deploy:
+  build-and-deploy:
     jobs:
       - build
       - hold:
-        type: approval
-        requires:
-          - build
-      - deploy
+          type: approval
+          requires:
+            - build
+      - deploy:
+          requires:
+            - hold
