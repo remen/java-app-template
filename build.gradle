@@ -1,7 +1,20 @@
 plugins {
-    id 'org.springframework.boot' version '1.5.4.RELEASE'
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
     id 'java'
+    id 'application'
 }
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:1.5.4.RELEASE'
+    }
+}
+
+mainClassName = "com.example.Application"
+
+assemble.dependsOn installDist
+distZip.enabled = false
+distTar.enabled = false
 
 repositories {
     mavenCentral()
