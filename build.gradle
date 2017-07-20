@@ -13,8 +13,9 @@ dependencyManagement {
 mainClassName = "com.example.Application"
 
 task copyDockerFile(type: Copy) {
+    dependsOn installDist
     from 'src/main/docker/Dockerfile'
-    into 'build/install/' + project.name
+    into installDist.destinationDir
 }
 
 assemble.dependsOn installDist
