@@ -36,6 +36,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle/caches
+            - ~/.gradle/wrapper/dists
           key: v1-dependencies-{{ checksum "build.gradle" }}
         
       # run tests!
