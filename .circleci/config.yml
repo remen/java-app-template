@@ -45,6 +45,8 @@ jobs:
       - store_test_results:
           path: build/test-results
   deploy:
+    docker:
+      - image: circleci/docker
     steps:
       - run: echo "Deploying!"
 workflows:
