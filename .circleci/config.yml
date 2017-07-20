@@ -76,6 +76,10 @@ workflows:
     jobs:
       - check
       - build:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - check
 #      - hold:
