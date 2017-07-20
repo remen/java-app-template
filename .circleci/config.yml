@@ -42,10 +42,8 @@ jobs:
       - run: gradle test
 
       # Store test results
-      - run: |
-          mkdir -p /junit/
-          find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} /junit/ \;
+#      - run: |
+#          mkdir -p /junit/
+#          find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} /junit/ \;
       - store_test_results:
-          path: /junit
-      - store_artifacts:
-          path: /junit
+          path: build/test-results
